@@ -1,0 +1,58 @@
+@import "tailwindcss";
+
+@theme {
+  /* Color Palette from the image */
+  --color-cream: #FFF9F0;
+  --color-cream-dark: #F5EFE6;
+  --color-brown-primary: #8B4513;
+  --color-brown-dark: #6B3410;
+  --color-brown-light: #A0522D;
+  --color-terracotta: #B85C38;
+  --color-text-primary: #2C2416;
+  --color-text-secondary: #5C5346;
+  --color-border: #E8DCC8;
+
+  /* Spacing */
+  --spacing-section: 5rem;
+  --spacing-card: 1.5rem;
+}
+
+/* Typography */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--color-text-primary);
+  background-color: var(--color-cream);
+  line-height: 1.6;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', 'Merriweather', Georgia, serif;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--color-text-primary);
+}
+
+h1 {
+  font-size: 3rem;
+}
+
+h2 {
+  font-size: 2.25rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.75;
+  color: var(--color-text-secondary);
+}
+
+/* Google Fonts Import */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700;800&display=swap');
