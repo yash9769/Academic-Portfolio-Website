@@ -6,7 +6,7 @@ import profileImage from '../images/profile_photo.png';
 import { profile } from '../data/profile';
 import TextType from '../components/ui/TextType';
 
-import SpotlightCard from '../components/ui/SpotlightCard';
+
 
 export function Home() {
   const stats = [
@@ -117,15 +117,14 @@ export function Home() {
           <h2 className="text-center text-[#8B4513] mb-12">Core Research Areas</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {researchAreas.map((area) => (
-              <SpotlightCard
+              <div
                 key={area.title}
                 className="bg-white p-8 rounded-lg shadow-md border border-[#E8DCC8] transition-shadow"
-                spotlightColor="rgba(139, 69, 19, 0.1)"
               >
                 <area.icon className="w-12 h-12 text-[#8B4513] mb-4" />
                 <h4 className="text-[#2C2416] mb-3">{area.title}</h4>
                 <p className="text-[#5C5346]">{area.description}</p>
-              </SpotlightCard>
+              </div>
             ))}
           </div>
         </div>
@@ -137,10 +136,9 @@ export function Home() {
           <h2 className="text-center text-[#8B4513] mb-12">Selected Publications</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {featuredPublications.map((pub, index) => (
-              <SpotlightCard
+              <div
                 key={index}
                 className="bg-white p-6 rounded-lg shadow-md border border-[#E8DCC8]"
-                spotlightColor="rgba(139, 69, 19, 0.1)"
               >
                 <h4 className="text-[#2C2416] mb-3 line-clamp-2" title={pub.title}>{pub.title}</h4>
                 <p className="text-[#5C5346] mb-2">{pub.journal}</p>
@@ -155,7 +153,7 @@ export function Home() {
                     </Button>
                   </a>
                 )}
-              </SpotlightCard>
+              </div>
             ))}
           </div>
           <div className="text-center mt-12">

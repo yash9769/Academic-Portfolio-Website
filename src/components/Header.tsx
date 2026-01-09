@@ -1,6 +1,4 @@
-import { useLocation } from 'react-router';
-import ShinyText from './ui/ShinyText';
-import PillNav from './ui/PillNav';
+import { useLocation, Link } from 'react-router';
 
 export function Header() {
   const location = useLocation();
@@ -17,16 +15,24 @@ export function Header() {
   ];
 
   return (
-    <header className="sticky top-0 z-50">
-      <PillNav
-        logo={<ShinyText text="Dr. Sushopti Gawade" speed={3} className="text-lg font-bold" />}
-        items={[{ label: 'Home', href: '/', ariaLabel: 'Home' }, ...navItems]}
-        activeHref={location.pathname}
-        baseColor="#FFF9F0"
-        pillColor="#8B4513"
-        pillTextColor="#5C5346"
-        hoveredPillTextColor="#FFF9F0"
-      />
+    <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <div className="container flex h-14 items-center">
+        <Link to="/" className="mr-6 flex items-center space-x-2">
+          <span className="font-bold">Dr. Sushopti Gawade</span>
+        </Link>
+        <nav className="flex items-center space-x-6 text-sm font-medium">
+          {navItems.map((item) => (
+            <Link
+              key={item.href}
+              to={item.href}
+              className={`transition-colors hover:text-foreground/80 ${location.pathname === item.href ? 'text-foreground' : 'text-foreground/60'
+                }`}
+            >
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+      </div>
     </header>
   );
 }
