@@ -1,66 +1,118 @@
 import { useState } from 'react';
-import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import { Textarea } from '../components/ui/textarea';
 import { Label } from '../components/ui/label';
-import { Mail, MapPin, Phone, ExternalLink } from 'lucide-react';
+import { Mail, MapPin, Phone, ExternalLink, Send } from 'lucide-react';
 import { profile } from '../data/profile';
 
 export function Contact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: '',
-  });
+  const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
+  const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission
     console.log('Form submitted:', formData);
-    alert('Thank you for your message! I will get back to you soon.');
+    setSubmitted(true);
     setFormData({ name: '', email: '', subject: '', message: '' });
+    setTimeout(() => setSubmitted(false), 5000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  return (
-    <div className="bg-[#FFF9F0] py-20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-[#8B4513] mb-8">Get in Touch</h1>
-        <p className="text-[#5C5346] mb-12 max-w-3xl">
-          Feel free to reach out for research collaborations, academic inquiries, or speaking
-          engagements. I look forward to hearing from you.
-        </p>
+  const socialLinks = [
+    { label: 'Google Scholar', href: profile.urls.googleScholar },
+    { label: 'ORCID', href: profile.urls.orcid },
+    { label: 'Scopus', href: profile.urls.scopus },
+    { label: 'ResearchGate', href: profile.urls.researchGate },
+  ];
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
-          {/* Contact Form */}
-          <div className="bg-white p-8 rounded-lg shadow-md border border-[#E8DCC8]">
-            <h2 className="text-[#8B4513] mb-6">Send a Message</h2>
-            <form onSubmit={handleSubmit} className="space-y-6">
+  return (
+    <div className="bg-white dark:bg-gray-950 min-h-screen">
+
+      {/* Page header */}
+      <div className="bg-navy dark:bg-gray-900 text-white px-4 sm:px-6 lg:px-8 py-10">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-2xl sm:text-3xl font-extrabold mb-2">Get in Touch</h1>
+          <p className="text-blue-200 text-sm max-w-lg">
+            Open to research collaborations, academic inquiries, and speaking engagements.
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        {/* Quick contact cards — mobile first stacked, then row */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-8">
+          <a
+            href={`mailto:${profile.email}`}
+            className="card-base p-4 flex items-center gap-3 hover:shadow-md transition-shadow group touch-target"
+          >
+            <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 group-hover:bg-navy group-hover:text-white transition-colors">
+              <Mail className="w-5 h-5 text-navy dark:text-blue-400 group-hover:text-white transition-colors" />
+            </div>
+            <div className="min-w-0">
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">Email</p>
+              <p className="text-xs font-medium text-gray-800 dark:text-white truncate">{profile.email}</p>
+            </div>
+          </a>
+
+          <a
+            href={`tel:${profile.mobile}`}
+            className="card-base p-4 flex items-center gap-3 hover:shadow-md transition-shadow group touch-target"
+          >
+            <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0 group-hover:bg-navy group-hover:text-white transition-colors">
+              <Phone className="w-5 h-5 text-navy dark:text-blue-400 group-hover:text-white transition-colors" />
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">Phone</p>
+              <p className="text-xs font-medium text-gray-800 dark:text-white">{profile.mobile}</p>
+            </div>
+          </a>
+
+          <div className="card-base p-4 flex items-start gap-3">
+            <div className="w-10 h-10 rounded-xl bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
+              <MapPin className="w-5 h-5 text-navy dark:text-blue-400" />
+            </div>
+            <div>
+              <p className="text-[10px] font-semibold uppercase tracking-wide text-gray-400 dark:text-gray-500">Institution</p>
+              <p className="text-xs font-medium text-gray-800 dark:text-white leading-relaxed">{profile.institution}</p>
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+          {/* Contact form */}
+          <div className="card-base p-5 sm:p-6">
+            <h2 className="text-base font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2">
+              <Send className="w-4 h-4 text-navy dark:text-blue-400" />
+              Send a Message
+            </h2>
+
+            {submitted && (
+              <div className="mb-4 px-4 py-3 rounded-lg bg-green-50 dark:bg-green-900/30 border border-green-200 dark:border-green-800 text-green-700 dark:text-green-300 text-sm font-medium">
+                ✓ Message sent! I'll get back to you soon.
+              </div>
+            )}
+
+            <form onSubmit={handleSubmit} className="space-y-4" noValidate>
               <div>
-                <Label htmlFor="name" className="text-[#2C2416]">
-                  Name
-                </Label>
+                <Label htmlFor="name" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Full Name</Label>
                 <Input
                   id="name"
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
                   required
-                  className="border-[#E8DCC8] mt-2"
+                  placeholder="Your full name"
+                  className="mt-1.5 h-11 text-sm border-gray-200 dark:border-gray-700 dark:bg-gray-900"
                 />
               </div>
 
               <div>
-                <Label htmlFor="email" className="text-[#2C2416]">
-                  Email
-                </Label>
+                <Label htmlFor="email" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Email Address</Label>
                 <Input
                   id="email"
                   name="email"
@@ -68,137 +120,78 @@ export function Contact() {
                   value={formData.email}
                   onChange={handleChange}
                   required
-                  className="border-[#E8DCC8] mt-2"
+                  placeholder="your@email.com"
+                  className="mt-1.5 h-11 text-sm border-gray-200 dark:border-gray-700 dark:bg-gray-900"
                 />
               </div>
 
               <div>
-                <Label htmlFor="subject" className="text-[#2C2416]">
-                  Subject
-                </Label>
+                <Label htmlFor="subject" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Subject</Label>
                 <Input
                   id="subject"
                   name="subject"
                   value={formData.subject}
                   onChange={handleChange}
                   required
-                  className="border-[#E8DCC8] mt-2"
+                  placeholder="Research collaboration / inquiry"
+                  className="mt-1.5 h-11 text-sm border-gray-200 dark:border-gray-700 dark:bg-gray-900"
                 />
               </div>
 
               <div>
-                <Label htmlFor="message" className="text-[#2C2416]">
-                  Message
-                </Label>
+                <Label htmlFor="message" className="text-xs font-semibold text-gray-700 dark:text-gray-300">Message</Label>
                 <Textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={6}
-                  className="border-[#E8DCC8] mt-2"
+                  rows={5}
+                  placeholder="Your message…"
+                  className="mt-1.5 text-sm border-gray-200 dark:border-gray-700 dark:bg-gray-900 resize-none"
                 />
               </div>
 
-              <Button type="submit" className="w-full bg-[#8B4513] hover:bg-[#6B3410] text-white">
+              <button
+                type="submit"
+                className="w-full h-11 inline-flex items-center justify-center gap-2 rounded-lg bg-navy text-white font-semibold text-sm hover:bg-navy-light transition-colors shadow touch-target"
+              >
+                <Send className="w-4 h-4" />
                 Send Message
-              </Button>
+              </button>
             </form>
           </div>
 
-          {/* Contact Information */}
-          <div className="space-y-8">
-            {/* Office Address */}
-            <div className="bg-white p-8 rounded-lg shadow-md border border-[#E8DCC8]">
-              <div className="flex items-start gap-4">
-                <MapPin className="w-6 h-6 text-[#8B4513] flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-[#2C2416] mb-3">Institution</h3>
-                  <p className="text-[#5C5346]">
-                    {profile.institution}
-                  </p>
-                </div>
+          {/* Professional profiles */}
+          <div>
+            <div className="card-base p-5 sm:p-6 mb-4">
+              <h2 className="text-base font-bold text-gray-900 dark:text-white mb-4">Academic Profiles</h2>
+              <div className="space-y-3">
+                {socialLinks.map(({ label, href }) => (
+                  <a
+                    key={label}
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-between p-3 rounded-xl border border-gray-100 dark:border-gray-800 hover:border-navy dark:hover:border-blue-500 hover:bg-gray-50 dark:hover:bg-gray-900 transition-colors group touch-target"
+                  >
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300 group-hover:text-navy dark:group-hover:text-blue-400 transition-colors">
+                      {label}
+                    </span>
+                    <ExternalLink className="w-4 h-4 text-gray-400 group-hover:text-navy dark:group-hover:text-blue-400 transition-colors" />
+                  </a>
+                ))}
               </div>
             </div>
 
-            {/* Email */}
-            <div className="bg-white p-8 rounded-lg shadow-md border border-[#E8DCC8]">
-              <div className="flex items-start gap-4">
-                <Mail className="w-6 h-6 text-[#8B4513] flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-[#2C2416] mb-3">Email</h3>
-                  <a
-                    href={`mailto:${profile.email}`}
-                    className="text-[#8B4513] hover:text-[#6B3410]"
-                  >
-                    {profile.email}
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            {/* Phone */}
-            <div className="bg-white p-8 rounded-lg shadow-md border border-[#E8DCC8]">
-              <div className="flex items-start gap-4">
-                <Phone className="w-6 h-6 text-[#8B4513] flex-shrink-0 mt-1" />
-                <div>
-                  <h3 className="text-[#2C2416] mb-3">Phone</h3>
-                  <p className="text-[#5C5346]">{profile.mobile}</p>
-                </div>
-              </div>
-            </div>
-
-            {/* Professional Profiles */}
-            <div className="bg-white p-8 rounded-lg shadow-md border border-[#E8DCC8]">
-              <h3 className="text-[#2C2416] mb-6">Professional Profiles</h3>
-              <div className="space-y-4">
-                {profile.urls.googleScholar && (
-                  <a
-                    href={profile.urls.googleScholar}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-[#8B4513] hover:text-[#6B3410]"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                    Google Scholar
-                  </a>
-                )}
-                {profile.urls.orcid && (
-                  <a
-                    href={profile.urls.orcid}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-[#8B4513] hover:text-[#6B3410]"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                    ORCID
-                  </a>
-                )}
-                {profile.urls.scopus && (
-                  <a
-                    href={profile.urls.scopus}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-[#8B4513] hover:text-[#6B3410]"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                    Scopus
-                  </a>
-                )}
-                {profile.urls.researchGate && (
-                  <a
-                    href={profile.urls.researchGate}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-3 text-[#8B4513] hover:text-[#6B3410]"
-                  >
-                    <ExternalLink className="w-5 h-5" />
-                    ResearchGate
-                  </a>
-                )}
-              </div>
-            </div>
+            {/* Prominent email CTA */}
+            <a
+              href={`mailto:${profile.email}`}
+              className="flex items-center justify-center gap-3 w-full py-4 rounded-xl bg-navy dark:bg-blue-600 text-white font-semibold text-sm hover:bg-navy-light dark:hover:bg-blue-500 transition-colors shadow touch-target"
+            >
+              <Mail className="w-5 h-5" />
+              Send Direct Email
+            </a>
           </div>
         </div>
       </div>

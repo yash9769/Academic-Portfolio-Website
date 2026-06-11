@@ -118,7 +118,8 @@ export const profile = {
         patents: "7",
         experience: "26+ yrs",
         citations: "300+",
-        awards: "10+"
+        awards: "10+",
+        copyrights: "15+"
     },
 
     researchInterests: [

@@ -13,6 +13,11 @@ module.exports = {
                 sm: 'calc(var(--radius) - 4px)'
             },
             colors: {
+                navy: {
+                    DEFAULT: 'hsl(220, 60%, 18%)',
+                    light: 'hsl(220, 45%, 26%)',
+                    dark:  'hsl(220, 65%, 12%)',
+                },
                 background: 'hsl(var(--background))',
                 foreground: 'hsl(var(--foreground))',
                 card: {
@@ -36,7 +41,7 @@ module.exports = {
                     foreground: 'hsl(var(--muted-foreground))'
                 },
                 accent: {
-                    DEFAULT: 'hsl(var(--accent))',
+                    DEFAULT: 'hsl(var(--accent-color))',
                     foreground: 'hsl(var(--accent-foreground))'
                 },
                 destructive: {
@@ -53,7 +58,17 @@ module.exports = {
                     '4': 'hsl(var(--chart-4))',
                     '5': 'hsl(var(--chart-5))'
                 }
-            }
+            },
+            spacing: {
+                'safe-bottom': 'env(safe-area-inset-bottom)',
+            },
+            /* Bottom bar offset utility */
+            padding: {
+                'bottom-bar': 'calc(4.5rem + env(safe-area-inset-bottom))',
+            },
+            screens: {
+                'xs': '360px',
+            },
         }
     },
     plugins: [require("tailwindcss-animate")],
