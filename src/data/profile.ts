@@ -7,7 +7,7 @@ export const profile = {
     email: "sushoptiekrishimitra@gmail.com",
     mobile: "+91 8369323410",
     summary: "Seeking a challenging role in an Educational or R&D Institution that offers opportunities to leverage my academic and administrative expertise to drive significant transformation within the department and organization.",
-    bio: `I am a Professor of Information Technology with over 26 years of teaching, research, and administrative experience under Mumbai University. I hold a Ph.D. in Computer Engineering, and my work spans usability engineering, AI/ML, agriculture technology, and e-governance. With 90+ publications, multiple patents, copyrights, and government-funded projects—including IIT Bombay TIH grants—I actively mentor Ph.D. and PG scholars, lead academic committees, and collaborate with industry to create impactful, real-world technology solutions.`,
+    bio: `I am a Professor of Information Technology with over 28.5 years of teaching, research, and administrative experience under Mumbai University. I hold a Ph.D. in Computer Engineering, and my work spans usability engineering, AI/ML, agriculture technology, and e-governance. With 102 publications, multiple patents, copyrights, and government-funded projects—including IIT Bombay TIH grants—I actively mentor Ph.D. and PG scholars, lead academic committees, and collaborate with industry to create impactful, real-world technology solutions.`,
 
     education: [
         {
@@ -114,10 +114,10 @@ export const profile = {
     ],
 
     stats: {
-        publications: "90+",
+        publications: "102",
         patents: "7",
-        experience: "26+ yrs",
-        citations: "300+",
+        experience: "28.5 yrs",
+        citations: "465",
         awards: "10+",
         copyrights: "15+"
     },

@@ -48,7 +48,7 @@ export function Home() {
               {/* Badge */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-blue-200 text-xs font-semibold mb-4 border border-white/10">
                 <Trophy className="w-3.5 h-3.5" />
-                Professor · 26+ Years Experience
+                Professor · 28.5+ Years Experience
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-2 tracking-tight">

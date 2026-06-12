@@ -66,7 +66,7 @@ export function Publications() {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl sm:text-3xl font-extrabold mb-2">Publications</h1>
           <p className="text-blue-200 text-sm max-w-lg">
-            {allPublications.length}+ peer-reviewed publications in Springer, Elsevier, IEEE, and other venues.
+            {profile.stats.publications} peer-reviewed publications in Springer, Elsevier, IEEE, and other venues.
           </p>
         </div>
       </div>

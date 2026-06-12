@@ -60,7 +60,7 @@ export function Teaching() {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl sm:text-3xl font-extrabold mb-2">Teaching</h1>
           <p className="text-blue-200 text-sm max-w-lg">
-            {profile.subjectsTaught.ug.length + profile.subjectsTaught.pg.length} courses taught across UG and PG programs over 26+ years.
+            {profile.subjectsTaught.ug.length + profile.subjectsTaught.pg.length} courses taught across UG and PG programs over 28.5+ years.
           </p>
         </div>
       </div>
