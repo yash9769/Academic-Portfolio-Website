@@ -1,8 +1,11 @@
 import { User, GraduationCap, ChevronRight } from 'lucide-react';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 import { Link } from 'react-router';
 
 export function Team() {
+  const { profile } = useProfile();
+  const phdScholars = profile.studentGuidance?.phd || [];
+  const pgDissertations = profile.studentGuidance?.pg || [];
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
 
@@ -27,7 +30,7 @@ export function Team() {
 
           {/* 2-col grid on mobile, 3-col on md+ */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-            {profile.studentGuidance.phd.map((s, i) => (
+            {phdScholars.map((s, i) => (
               <div key={i} className="card-base p-4 flex flex-col items-center text-center">
                 {/* Avatar */}
                 <div className="w-14 h-14 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center mb-3 border-2 border-blue-100 dark:border-blue-800">
@@ -53,11 +56,11 @@ export function Team() {
         <section className="mb-8">
           <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
             <GraduationCap className="w-5 h-5 text-navy dark:text-blue-400" />
-            PG Dissertations ({profile.studentGuidance.pg.length})
+            PG Dissertations ({pgDissertations.length})
           </h2>
           <div className="card-base overflow-hidden">
             <ul className="divide-y divide-gray-100 dark:divide-gray-800">
-              {profile.studentGuidance.pg.map((p, i) => (
+              {pgDissertations.map((p, i) => (
                 <li key={i} className="flex items-start gap-3 px-4 py-3">
                   <ChevronRight className="w-4 h-4 text-navy dark:text-blue-400 flex-shrink-0 mt-0.5" />
                   <span className="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">{p}</span>

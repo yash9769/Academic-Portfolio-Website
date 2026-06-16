@@ -1,8 +1,9 @@
 import { Calendar, Users, GraduationCap, ChevronRight, Microscope, FileText } from 'lucide-react';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 
 export function Research() {
-  const totalFunding = profile.grants.reduce((sum, g) => {
+  const { profile } = useProfile();
+  const totalFunding = (profile.grants || []).reduce((sum, g) => {
     return sum + parseInt(g.amount.replace(/[^0-9]/g, ''), 10);
   }, 0);
 

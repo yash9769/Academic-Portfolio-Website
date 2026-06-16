@@ -1,8 +1,9 @@
 import { Link } from 'react-router';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 import { Mail, ExternalLink, BookOpen, MapPin } from 'lucide-react';
 
 export function Footer() {
+  const { profile } = useProfile();
   const year = new Date().getFullYear();
 
   return (
@@ -86,9 +87,18 @@ export function Footer() {
 
         {/* Divider */}
         <div className="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-          <p className="text-xs text-gray-500">
-            © {year} {profile.name}. All rights reserved.
-          </p>
+          <div className="flex flex-wrap items-center gap-x-2 gap-y-1">
+            <p className="text-xs text-gray-500">
+              © {year} {profile.name}. All rights reserved.
+            </p>
+            <span className="text-gray-700 hidden sm:inline">·</span>
+            <Link
+              to="/admin"
+              className="text-xs text-gray-500 hover:text-gray-300 transition-colors"
+            >
+              Admin Portal
+            </Link>
+          </div>
           <div className="flex items-center gap-1 text-xs text-gray-600">
             <BookOpen className="w-3 h-3" />
             <span>{profile.stats.publications} Publications · {profile.stats.citations} Citations</span>

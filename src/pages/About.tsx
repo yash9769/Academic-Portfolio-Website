@@ -1,9 +1,11 @@
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import profileImage from '../images/profile_photo.png';
-import { profile } from '../data/profile';
-import { GraduationCap, Briefcase, Award, Users, MapPin, Mail, Phone } from 'lucide-react';
+import { useProfile } from '../context/ProfileContext';
+import { GraduationCap, Briefcase, Award, Users, MapPin, Mail, Phone, FileText } from 'lucide-react';
 
 export function About() {
+  const { profile } = useProfile();
+
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
 
@@ -15,7 +17,7 @@ export function About() {
             <div className="flex-shrink-0 mb-5 sm:mb-0">
               <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-4 ring-white/20 shadow-2xl mx-auto">
                 <ImageWithFallback
-                  src={profileImage}
+                  src={profile.photoUrl || profileImage}
                   alt={profile.name}
                   className="w-full h-full object-cover"
                 />
@@ -54,6 +56,18 @@ export function About() {
                   <Phone className="w-3.5 h-3.5" />
                   {profile.mobile}
                 </a>
+                {profile.resumeUrl && (
+                  <a
+                    href={profile.resumeUrl}
+                    download={`${profile.name.replace(/\s+/g, '_')}_CV.pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gold text-white text-xs hover:opacity-90 transition-opacity border border-gold touch-target"
+                  >
+                    <FileText className="w-3.5 h-3.5" />
+                    Download Resume
+                  </a>
+                )}
               </div>
             </div>
           </div>

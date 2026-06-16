@@ -9,6 +9,8 @@ import { Teaching } from "../pages/Teaching";
 import { Team } from "../pages/Team";
 import { Awards } from "../pages/Awards";
 import { Contact } from "../pages/Contact";
+import { AdminLogin } from "../pages/AdminLogin";
+import { AdminDashboard } from "../pages/AdminDashboard";
 
 export const router = createBrowserRouter([
   {
@@ -25,5 +27,13 @@ export const router = createBrowserRouter([
       { path: "awards", Component: Awards },
       { path: "contact", Component: Contact },
     ],
+  },
+  {
+    path: "/admin/login",
+    Component: AdminLogin,
+  },
+  {
+    path: "/admin",
+    Component: AdminDashboard,
   },
 ]);

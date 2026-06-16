@@ -2,7 +2,7 @@ import { Link } from 'react-router';
 import { BookOpen, Award, GraduationCap, TrendingUp, Trophy, Cpu, Network, Zap, Mail, ExternalLink, ChevronRight, FlaskConical, FileText } from 'lucide-react';
 import { ImageWithFallback } from '../components/figma/ImageWithFallback';
 import profileImage from '../images/profile_photo.png';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 
 const iconMap: Record<string, React.ElementType> = {
   'Machine Learning': Cpu,
@@ -11,18 +11,20 @@ const iconMap: Record<string, React.ElementType> = {
   'Data Science': TrendingUp,
 };
 
-const stats = [
-  { icon: BookOpen, label: 'Publications', value: profile.stats.publications },
-  { icon: Award, label: 'Patents', value: profile.stats.patents },
-  { icon: GraduationCap, label: 'Experience', value: profile.stats.experience },
-  { icon: TrendingUp, label: 'Citations', value: profile.stats.citations },
-  { icon: Trophy, label: 'Awards', value: profile.stats.awards },
-  { icon: FileText, label: 'Copyrights', value: profile.stats.copyrights },
-];
-
-const featuredPublications = profile.publications.journals.slice(0, 3);
-
 export function Home() {
+  const { profile } = useProfile();
+
+  const stats = [
+    { icon: BookOpen, label: 'Publications', value: profile.stats.publications },
+    { icon: Award, label: 'Patents', value: profile.stats.patents },
+    { icon: GraduationCap, label: 'Experience', value: profile.stats.experience },
+    { icon: TrendingUp, label: 'Citations', value: profile.stats.citations },
+    { icon: Trophy, label: 'Awards', value: profile.stats.awards },
+    { icon: FileText, label: 'Copyrights', value: profile.stats.copyrights },
+  ];
+
+  const featuredPublications = profile.publications.journals.slice(0, 3);
+
   return (
     <div className="bg-white dark:bg-gray-950">
 
@@ -35,7 +37,7 @@ export function Home() {
             <div className="flex-shrink-0 mb-6 lg:mb-0">
               <div className="relative w-32 h-32 sm:w-40 sm:h-40 lg:w-48 lg:h-48 rounded-full overflow-hidden ring-4 ring-white/20 shadow-2xl mx-auto">
                 <ImageWithFallback
-                  src={profileImage}
+                  src={profile.photoUrl || profileImage}
                   alt={profile.name}
                   className="w-full h-full object-cover"
                   loading="eager"
@@ -48,7 +50,7 @@ export function Home() {
               {/* Badge */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/10 text-blue-200 text-xs font-semibold mb-4 border border-white/10">
                 <Trophy className="w-3.5 h-3.5" />
-                Professor · 28.5+ Years Experience
+                Professor · {profile.stats.experience}+ Years Experience
               </div>
 
               <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white mb-2 tracking-tight">
@@ -74,6 +76,18 @@ export function Home() {
                   <BookOpen className="w-4 h-4" />
                   Publications
                 </Link>
+                {profile.resumeUrl && (
+                  <a
+                    href={profile.resumeUrl}
+                    download={`${profile.name.replace(/\s+/g, '_')}_CV.pdf`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-gold text-white font-semibold text-sm hover:opacity-90 transition-opacity shadow touch-target"
+                  >
+                    <FileText className="w-4 h-4" />
+                    Download CV
+                  </a>
+                )}
                 <a
                   href={profile.urls.googleScholar}
                   target="_blank"

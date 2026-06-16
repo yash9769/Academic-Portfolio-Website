@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Input } from '../components/ui/input';
 import { FileText, ExternalLink, Book, BookOpen, Search, X } from 'lucide-react';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 
 type PubType = 'all' | 'journal' | 'conference' | 'book' | 'chapter';
 
@@ -12,15 +12,6 @@ const TYPE_LABELS: Record<PubType, string> = {
   book: 'Book',
   chapter: 'Book Chapter',
 };
-
-const YEAR_OPTIONS = ['all', '2024', '2023', '2022', '2021'];
-
-const allPublications = [
-  ...profile.publications.journals.map(p => ({ ...p, type: 'journal' as const })),
-  ...profile.publications.conferences.map(p => ({ ...p, type: 'conference' as const })),
-  ...profile.publications.books.map(p => ({ ...p, type: 'book' as const })),
-  ...profile.publications.bookChapters.map(p => ({ ...p, type: 'chapter' as const })),
-];
 
 const typeIcon = (type: string) => {
   if (type === 'book' || type === 'chapter') return Book;
@@ -35,9 +26,20 @@ const typeColor: Record<string, string> = {
 };
 
 export function Publications() {
+  const { profile } = useProfile();
   const [search, setSearch] = useState('');
   const [year, setYear] = useState<string>('all');
   const [type, setType] = useState<PubType>('all');
+
+  const allPublications = [
+    ...(profile.publications.journals || []).map(p => ({ ...p, type: 'journal' as const })),
+    ...(profile.publications.conferences || []).map(p => ({ ...p, type: 'conference' as const })),
+    ...(profile.publications.books || []).map(p => ({ ...p, type: 'book' as const })),
+    ...(profile.publications.bookChapters || []).map(p => ({ ...p, type: 'chapter' as const })),
+  ];
+
+  // Derive unique years dynamically from the list of publications
+  const years = ['all', ...Array.from(new Set(allPublications.map(p => p.year))).filter(Boolean).sort().reverse()];
 
   const filtered = allPublications.filter(pub => {
     const q = search.toLowerCase();
@@ -118,7 +120,7 @@ export function Publications() {
 
         {/* Year filter chips */}
         <div className="flex gap-2 overflow-x-auto pb-3 mb-6 scrollbar-none -mx-4 px-4 sm:mx-0 sm:px-0 sm:flex-wrap">
-          {YEAR_OPTIONS.map(y => (
+          {years.map(y => (
             <button
               key={y}
               onClick={() => setYear(y)}

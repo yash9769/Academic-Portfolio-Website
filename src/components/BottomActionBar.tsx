@@ -1,11 +1,12 @@
 import { Mail, BookOpen, FileDown, ExternalLink } from 'lucide-react';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 
 /**
  * Sticky bottom action bar — visible only on mobile (hidden lg:hidden).
  * Gives one-thumb access to the four most-used actions.
  */
 export function BottomActionBar() {
+  const { profile } = useProfile();
   const actions = [
     {
       label: 'Email',

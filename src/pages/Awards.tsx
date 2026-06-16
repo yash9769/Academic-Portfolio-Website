@@ -1,7 +1,11 @@
 import { Trophy, Award, Star, BookOpen, TrendingUp, FileText } from 'lucide-react';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 
 export function Awards() {
+  const { profile } = useProfile();
+  const administrativeRoles = profile.administrativeRoles || [];
+  const memberships = profile.memberships || [];
+  const patents = profile.patents || [];
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
 
@@ -26,12 +30,12 @@ export function Awards() {
           </div>
           <div className="card-base p-4 text-center">
             <Award className="w-6 h-6 text-navy dark:text-blue-400 mx-auto mb-2" />
-            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{profile.patents.length}</div>
+            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{patents.length}</div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Patents</p>
           </div>
           <div className="card-base p-4 text-center">
             <Star className="w-6 h-6 text-amber-500 dark:text-amber-400 mx-auto mb-2" />
-            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{profile.memberships.length}</div>
+            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{memberships.length}</div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Memberships</p>
           </div>
           <div className="card-base p-4 text-center">
@@ -57,7 +61,7 @@ export function Awards() {
 
           {/* Timeline layout: year indicator left, text right */}
           <div className="relative border-l-2 border-blue-100 dark:border-blue-900 ml-4 space-y-4 pb-2">
-            {profile.administrativeRoles.map((role, i) => {
+            {administrativeRoles.map((role, i) => {
               // Extract year range from role string
               const yearMatch = role.match(/\((\d{4})[^)]*\)/);
               const year = yearMatch ? yearMatch[1] : null;
@@ -90,7 +94,7 @@ export function Awards() {
         <section>
           <h2 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Professional Memberships</h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-            {profile.memberships.map((m, i) => (
+            {memberships.map((m, i) => (
               <div key={i} className="card-base p-4 flex items-center gap-3">
                 <div className="w-9 h-9 rounded-full bg-blue-50 dark:bg-blue-900/30 flex items-center justify-center flex-shrink-0">
                   <Award className="w-4 h-4 text-navy dark:text-blue-400" />

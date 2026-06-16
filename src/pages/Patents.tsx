@@ -1,5 +1,5 @@
 import { Award, CheckCircle, Clock, FileText, BookOpen, AlertCircle, GraduationCap, TrendingUp } from 'lucide-react';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 
 const statusConfig = (status: string) => {
   const s = status.toLowerCase();
@@ -13,7 +13,8 @@ const statusConfig = (status: string) => {
 };
 
 export function Patents() {
-  const grantedCount = profile.patents.filter(p => p.status.toLowerCase().includes('granted')).length;
+  const { profile } = useProfile();
+  const grantedCount = (profile.patents || []).filter(p => p.status.toLowerCase().includes('granted')).length;
 
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">

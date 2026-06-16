@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { BookOpen, GraduationCap, ChevronDown, Award, FileText } from 'lucide-react';
-import { profile } from '../data/profile';
+import { useProfile } from '../context/ProfileContext';
 
 function Accordion({ title, level, children }: { title: string; level: string; children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -49,8 +49,13 @@ function Accordion({ title, level, children }: { title: string; level: string; c
 }
 
 export function Teaching() {
+  const { profile } = useProfile();
   const [ugOpen, setUgOpen] = useState(false);
   const [pgOpen, setPgOpen] = useState(false);
+
+  const ugCourses = profile.subjectsTaught?.ug || [];
+  const pgCourses = profile.subjectsTaught?.pg || [];
+  const phdStudents = profile.studentGuidance?.phd || [];
 
   return (
     <div className="bg-white dark:bg-gray-950 min-h-screen">
@@ -60,7 +65,7 @@ export function Teaching() {
         <div className="max-w-6xl mx-auto">
           <h1 className="text-2xl sm:text-3xl font-extrabold mb-2">Teaching</h1>
           <p className="text-blue-200 text-sm max-w-lg">
-            {profile.subjectsTaught.ug.length + profile.subjectsTaught.pg.length} courses taught across UG and PG programs over 28.5+ years.
+            {ugCourses.length + pgCourses.length} courses taught across UG and PG programs over {profile.stats.experience} years.
           </p>
         </div>
       </div>
@@ -71,12 +76,12 @@ export function Teaching() {
         <div className="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-8">
           <div className="card-base p-4 text-center">
             <BookOpen className="w-6 h-6 text-navy dark:text-blue-400 mx-auto mb-2" />
-            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{profile.subjectsTaught.ug.length}</div>
+            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{ugCourses.length}</div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">UG Courses</p>
           </div>
           <div className="card-base p-4 text-center">
             <GraduationCap className="w-6 h-6 text-navy dark:text-blue-400 mx-auto mb-2" />
-            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{profile.subjectsTaught.pg.length}</div>
+            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{pgCourses.length}</div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">PG Courses</p>
           </div>
           <div className="card-base p-4 text-center">
@@ -91,7 +96,7 @@ export function Teaching() {
           </div>
           <div className="card-base p-4 text-center">
             <GraduationCap className="w-6 h-6 text-navy dark:text-blue-400 mx-auto mb-2" />
-            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{profile.studentGuidance.phd.length}</div>
+            <div className="text-2xl font-extrabold text-gray-900 dark:text-white">{phdStudents.length}</div>
             <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Ph.D.</p>
           </div>
           <div className="card-base p-4 text-center">
@@ -117,7 +122,7 @@ export function Teaching() {
           </div>
 
           <div className="space-y-2">
-            {profile.subjectsTaught.ug.map((course, i) => (
+            {ugCourses.map((course, i) => (
               <Accordion key={i} title={course} level="UG">
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Undergraduate-level course taught under Mumbai University / VIT curriculum.
@@ -143,7 +148,7 @@ export function Teaching() {
           </div>
 
           <div className="space-y-2">
-            {profile.subjectsTaught.pg.map((course, i) => (
+            {pgCourses.map((course, i) => (
               <Accordion key={i} title={course} level="PG">
                 <p className="text-xs text-gray-500 dark:text-gray-400">
                   Postgraduate-level course for ME/MTech programs under Mumbai University curriculum.
